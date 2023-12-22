@@ -1,0 +1,11 @@
+
+
+For bash-language-server on mac:
+brew install bash-language-server
+
+install digestif with wrapper script in:
+curl \
+  https://raw.githubusercontent.com/astoff/digestif/master/scripts/digestif \
+  > digestif_wrap.sh
+
+  Installed luarocks and then luarocks install --local digestif
