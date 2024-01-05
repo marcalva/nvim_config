@@ -120,6 +120,45 @@ local keymap = vim.api.nvim_set_keymap
 local bufmap = vim.api.nvim_buf_set_keymap
 local autocmd = vim.api.nvim_create_autocmd
 
+-- <Leader>cs will be equivalent to `REPLStart aichat`
+-- 2<Leader>cs will be equivalent to `2REPLStart aichat`, etc.
+keymap('n', '<Leader>cs', '', {
+    callback = run_cmd_with_count 'REPLStart aichat',
+    desc = 'Start an Aichat REPL',
+})
+-- <Leader>cf will be equivalent to `REPLFocus aichat`
+-- 2<Leader>cf will be equivalent to `2REPLFocus aichat`, etc.
+keymap('n', '<Leader>cf', '', {
+    callback = run_cmd_with_count 'REPLFocus aichat',
+    desc = 'Focus on Aichat REPL',
+})
+keymap('n', '<Leader>ch', '', {
+    callback = run_cmd_with_count 'REPLHide aichat',
+    desc = 'Hide Aichat REPL',
+})
+keymap('v', '<Leader>cr', '', {
+    callback = run_cmd_with_count 'REPLSendVisual aichat',
+    desc = 'Send visual region to Aichat',
+})
+keymap('n', '<Leader>crr', '', {
+    callback = run_cmd_with_count 'REPLSendLine aichat',
+    desc = 'Send current line to Aichat',
+})
+-- `<Leader>crap` will send a paragraph to the first aichat REPL.
+-- `2<Leader>crap` will send a paragraph to the second aichat REPL. Note that
+-- `ap` is just an example and can be replaced with any text object or motion.
+keymap('n', '<Leader>cr', '', {
+    callback = run_cmd_with_count 'REPLSendOperator aichat',
+    desc = 'Operator to Send text to Aichat',
+})
+keymap('n', '<Leader>cq', '', {
+    callback = run_cmd_with_count 'REPLClose aichat',
+    desc = 'Quit Aichat',
+})
+keymap('n', '<Leader>cc', '<CMD>REPLCleanup<CR>', {
+    desc = 'Clear aichat REPLs.',
+})
+
 local ft_to_repl = {
     r = 'radian',
     rmd = 'radian',
@@ -136,57 +175,60 @@ autocmd('FileType', {
     desc = 'set up REPL keymap',
     callback = function()
         local repl = ft_to_repl[vim.bo.filetype]
-        bufmap(0, 'n', '<leader>rs', '', {
+        bufmap(0, 'n', '<LocalLeader>rs', '', {
             callback = run_cmd_with_count('REPLStart ' .. repl),
             desc = 'Start an REPL',
         })
-        bufmap(0, 'n', '<leader>rf', '', {
+        bufmap(0, 'n', '<LocalLeader>rf', '', {
             callback = run_cmd_with_count 'REPLFocus',
             desc = 'Focus on REPL',
         })
-        bufmap(0, 'n', '<leader>rh', '', {
+        bufmap(0, 'n', '<LocalLeader>rv', '<CMD>Telescope REPLShow<CR>', {
+            desc = 'View REPLs in telescope',
+        })
+        bufmap(0, 'n', '<LocalLeader>rh', '', {
             callback = run_cmd_with_count 'REPLHide',
             desc = 'Hide REPL',
         })
-        bufmap(0, 'v', '<leader>s', '', {
+        bufmap(0, 'v', '<LocalLeader>s', '', {
             callback = run_cmd_with_count 'REPLSendVisual',
             desc = 'Send visual region to REPL',
         })
-        bufmap(0, 'n', '<leader>ss', '', {
+        bufmap(0, 'n', '<LocalLeader>ss', '', {
             callback = run_cmd_with_count 'REPLSendLine',
             desc = 'Send current line to REPL',
         })
-        -- `<leader>sap` will send the current paragraph to the
+        -- `<LocalLeader>sap` will send the current paragraph to the
         -- buffer-attached REPL, or REPL 1 if there is no REPL attached.
         -- `2<Leader>sap` will send the paragraph to REPL 2. Note that `ap` is
         -- just an example and can be replaced with any text object or motion.
-        bufmap(0, 'n', '<leader>s', '', {
-            callback = run_cmd_with_count 'REPLSendMotion',
-            desc = 'Send motion to REPL',
+        bufmap(0, 'n', '<LocalLeader>s', '', {
+            callback = run_cmd_with_count 'REPLSendOperator',
+            desc = 'Operator to send to REPL',
         })
-        bufmap(0, 'n', '<leader>rq', '', {
+        bufmap(0, 'n', '<LocalLeader>rq', '', {
             callback = run_cmd_with_count 'REPLClose',
             desc = 'Quit REPL',
         })
-        bufmap(0, 'n', '<leader>rc', '<CMD>REPLCleanup<CR>', {
+        bufmap(0, 'n', '<LocalLeader>rc', '<CMD>REPLCleanup<CR>', {
             desc = 'Clear REPLs.',
         })
-        bufmap(0, 'n', '<leader>rS', '<CMD>REPLSwap<CR>', {
+        bufmap(0, 'n', '<LocalLeader>rS', '<CMD>REPLSwap<CR>', {
             desc = 'Swap REPLs.',
         })
-        bufmap(0, 'n', '<leader>r?', '', {
+        bufmap(0, 'n', '<LocalLeader>r?', '', {
             callback = run_cmd_with_count 'REPLStart',
             desc = 'Start an REPL from available REPL metas',
         })
-        bufmap(0, 'n', '<leader>ra', '<CMD>REPLAttachBufferToREPL<CR>', {
+        bufmap(0, 'n', '<LocalLeader>ra', '<CMD>REPLAttachBufferToREPL<CR>', {
             desc = 'Attach current buffer to a REPL',
         })
-        bufmap(0, 'n', '<leader>rd', '<CMD>REPLDetachBufferToREPL<CR>', {
+        bufmap(0, 'n', '<LocalLeader>rd', '<CMD>REPLDetachBufferToREPL<CR>', {
             desc = 'Detach current buffer to any REPL',
         })
-        -- `3<leader>re df.describe()`: This keymap executes the specified
+        -- `3<LocalLeader>re df.describe()`: This keymap executes the specified
         -- command in REPL 3.
-        bufmap(0, 'n', '<leader>re', '', {
+        bufmap(0, 'n', '<LocalLeader>re', '', {
             callback = partial_cmd_with_count_expr 'REPLExec ',
             desc = 'Execute command in REPL',
             expr = true,
