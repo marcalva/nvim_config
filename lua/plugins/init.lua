@@ -38,19 +38,47 @@ require("lazy").setup({
     {"nvim-lua/lsp-status.nvim"},
     -- completion
     {"hrsh7th/cmp-nvim-lsp"},
- -- {"hrsh7th/cmp-nvim-lsp-signature-help"},
+    -- {"hrsh7th/cmp-nvim-lsp-signature-help"},
     {"hrsh7th/cmp-buffer"},
     {"FelipeLema/cmp-async-path"},
     {"hrsh7th/cmp-cmdline"},
     {"amarakon/nvim-cmp-lua-latex-symbols"},
-    {"saadparwaiz1/cmp_luasnip"},
     {"hrsh7th/nvim-cmp"},
     {"onsails/lspkind.nvim"},
     {"ray-x/lsp_signature.nvim"},
-    -- Snippets
-    {"L3MON4D3/LuaSnip",
-        build = "make install_jsregexp",
-        dependencies = { "rafamadriz/friendly-snippets" },
+    {"dstein64/vim-startuptime"},
+    {
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        version = "v2.2", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!).
+        -- build = "make install_jsregexp"
     },
-    {"dstein64/vim-startuptime"}
+    -- copilot
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({})
+        end,
+    },
+    {
+        "zbirenbaum/copilot-cmp",
+        config = function()
+            require("copilot_cmp").setup()
+        end,
+    },
+    -- chatGPT
+    {
+        "robitx/gp.nvim",
+        config = function()
+            require("gp").setup()
+
+            -- or setup with your own config (see Install > Configuration in Readme)
+            -- require("gp").setup(config)
+
+            -- shortcuts might be setup here (see Usage > Shortcuts in Readme)
+        end,
+    },
 })
