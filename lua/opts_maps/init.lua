@@ -24,8 +24,8 @@ vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 -- buffer navigation
-vim.keymap.set('n', '<leader>bb', ':buffers<CR>:buffer ', {noremap = true})
-vim.keymap.set('n', '<leader>bd', ':buffers<CR>:bdelete ', {noremap = true})
+vim.keymap.set('n', '<leader>l', ':buffers<CR>:buffer ', {noremap = true})
+vim.keymap.set('n', '<leader>d', ':buffers<CR>:bdelete ', {noremap = true})
 vim.keymap.set('n', '<leader>n', ':bnext<CR>', {noremap = true})
 vim.keymap.set('n', '<leader>N', ':bprevious<CR>', {noremap = true})
 vim.keymap.set('n', '<leader>bf', ':bfirst<CR>', {noremap = true})
