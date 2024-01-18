@@ -1,6 +1,6 @@
 
 -- LEADER
-vim.g.maplocalleader = ",,"
+vim.g.maplocalleader = ","
 vim.g.mapleader = ","
 
 -- plugin files
