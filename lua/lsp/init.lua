@@ -24,36 +24,16 @@ require("mason-null-ls").setup {
 }
 
 local null_ls = require("null-ls")
-null_ls.setup({                   
-    sources = {
-        -- null_ls.builtins.diagnostics.chktex,
-    },                                              
-})
+null_ls.setup({})
 -- R lsp already comes with styler and lintr
 -- clangd lsp already covers diagnostics and formatting
 -- bashls lsp already comes with shellcheck diagnostics
 
--- status
-local lsp_status = require('lsp-status')
-lsp_status.register_progress()
-
 -- Set up lspconfig.
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-local capabilities = vim.tbl_extend(
-    'keep',
-    capabilities or {},
-    lsp_status.capabilities
-)
-lsp_status.config {
-    indicator_errors = 'E',
-    indicator_warnings = 'W',
-    indicator_info = 'i',
-    indicator_hint = '?',
-    indicator_ok = 'OK',
-}
 
-lspconfig.clangd.setup{on_attach = lsp_status.on_attach, capabilities = capabilities}
+lspconfig.clangd.setup{capabilities = capabilities}
 lspconfig.r_language_server.setup{capabilities = capabilities}
 lspconfig.pyright.setup{capabilities = capabilitie}
 lspconfig.bashls.setup{capabilities = capabilities}

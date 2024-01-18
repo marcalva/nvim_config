@@ -11,7 +11,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
 require("lazy").setup({
     {"ibhagwan/fzf-lua", lazy = true},
     {"lervag/vimtex"},
@@ -28,6 +27,37 @@ require("lazy").setup({
     {"sainnhe/gruvbox-material", lazy = false},
     -- REPL
     {"milanglacier/yarepl.nvim"},
+    -- autopairs
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        opts = {move_right = false, map_c_h = true, map_c_w = false} -- this is equalent to setup({}) function
+    },
+    {
+        'abecodes/tabout.nvim',
+        config = function()
+            require('tabout').setup {
+                tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
+                backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
+                act_as_tab = true, -- shift content if tab out is not possible
+                act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
+                default_tab = '<C-t>', -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
+                default_shift_tab = '<C-d>', -- reverse shift default action,
+                enable_backwards = true, -- well ...
+                completion = true, -- if the tabkey is used in a completion pum
+                tabouts = {
+                    {open = "'", close = "'"},
+                    {open = '"', close = '"'},
+                    {open = '`', close = '`'},
+                    {open = '(', close = ')'},
+                    {open = '[', close = ']'},
+                    {open = '{', close = '}'}
+                },
+                ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
+                exclude = {} -- tabout will ignore these filetypes
+	}
+	end
+    },
     -- LSP
     {"neovim/nvim-lspconfig"},
     {"williamboman/mason.nvim"},
@@ -70,15 +100,5 @@ require("lazy").setup({
         end,
     },
     -- chatGPT
-    {
-        "robitx/gp.nvim",
-        config = function()
-            require("gp").setup()
-
-            -- or setup with your own config (see Install > Configuration in Readme)
-            -- require("gp").setup(config)
-
-            -- shortcuts might be setup here (see Usage > Shortcuts in Readme)
-        end,
-    },
+    { "robitx/gp.nvim", },
 })

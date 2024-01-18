@@ -36,10 +36,8 @@ cmp.setup({
                 cmp.select_next_item()
                 -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable() 
                 -- that way you will only jump inside the snippet region
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            elseif has_words_before() then
-                cmp.complete()
+            elseif luasnip.expand_or_locally_jumpable() then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
             else
                 fallback()
             end
@@ -47,34 +45,40 @@ cmp.setup({
         ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
+            elseif luasnip.locally_jumpable(-1) then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
             else
                 fallback()
             end
         end, { "i", "s" }),
     }),
-    sources = cmp.config.sources({
-        { name = "copilot", group_index = 2 },
-        { name = 'luasnip' },
-        { name = 'nvim_lsp' },
-        -- { name = 'nvim_lsp_signature_help' },
-        { name = 'buffer' },
+    sources = {
+        { name = 'nvim_lsp', priority = 4},
+        { name = "copilot", priority = 3},
+        { name = 'nvim_lsp_signature_help', priority = 2},
+        { name = 'buffer', priority = 2},
+        { name = 'luasnip', priority = 1},
         { name = 'async_path',
             option = {get_cwd = main_getcwd},
+            priority = 1,
         },
-    }),
+    },
     formatting = {
         format = lspkind.cmp_format({
-            mode = 'symbol_text',
-            maxwidth = 50,
+            mode = 'text',
+            maxwidth = 30,
             ellipsis_char = '...',
         })
     },
 })
 
--- max number of items in popup window
--- vim.cmd([[set pumheight=25]])
+-- If you want insert `(` after select function or method item
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
 
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
