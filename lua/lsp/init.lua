@@ -102,13 +102,15 @@ vim.diagnostic.config({
     },
 })
 
+-- ray-x lsp_signature
 local signature_config = {
-  log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
-  debug = true,
-  hint_enable = false,
-  handler_opts = { border = "rounded" },
+    log_path = vim.fn.stdpath("cache") .. "/lsp_signature.log",
+    bind = true,
+    debug = false,
+    hint_enable = false,
+    handler_opts = { border = "rounded" },
     hi_parameter = "IncSearch",
-  max_width = 120,
+    max_width = 80,
 }
 
 require("lsp_signature").setup(signature_config)
