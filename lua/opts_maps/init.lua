@@ -22,15 +22,14 @@ vim.opt.foldenable = false
 -- max number of items in popup window
 vim.cmd([[set pumheight=40]])
 
-vim.opt.colorcolumn = "80"
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 -- buffer navigation
 vim.keymap.set('n', '<leader>l', ':buffers<CR>:buffer ', {noremap = true})
-vim.keymap.set('n', '<leader>d', ':buffers<CR>:bdelete ', {noremap = true})
 vim.keymap.set('n', '<leader>n', ':bnext<CR>', {noremap = true})
 vim.keymap.set('n', '<leader>N', ':bprevious<CR>', {noremap = true})
+vim.keymap.set('n', '<leader>bd', ':buffers<CR>:bdelete ', {noremap = true})
 vim.keymap.set('n', '<leader>bf', ':bfirst<CR>', {noremap = true})
 vim.keymap.set('n', '<leader>bl', ':blast<CR>', {noremap = true})
 
@@ -41,3 +40,9 @@ vim.keymap.set('n', '<leader>q', ':qa!<CR>', {noremap = true})
 --- insert empty line below or above (with count)
 vim.keymap.set('n', '<leader>o', ':<C-u>call append(line("."), repeat([""], v:count1))<CR>', defaults)
 vim.keymap.set('n', '<leader>O', ':<C-u>call append(line(".")-1, repeat([""], v:count1))<CR>', defaults)
+
+-- yank/delete to/from +register
+vim.keymap.set('n', '<leader>d', '"+d', {noremap = true})
+vim.keymap.set('n', '<leader>y', '"+y', {noremap = true})
+vim.keymap.set('n', '<leader>p', '"+p', {noremap = true})
+vim.keymap.set('n', '<leader>P', '"+P', {noremap = true})

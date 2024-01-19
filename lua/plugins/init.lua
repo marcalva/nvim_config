@@ -24,7 +24,6 @@ require("lazy").setup({
             require("nvim-surround").setup({})
         end
     },
-    {"sainnhe/gruvbox-material", lazy = false},
     -- REPL
     {"milanglacier/yarepl.nvim"},
     -- autopairs

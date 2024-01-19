@@ -1,7 +1,11 @@
 
+to install latest vim version from mac image app
 
 For bash-language-server on mac:
 brew install bash-language-server
+sudo cp -r nvim-macos/bin/nvim /usr/local/bin/
+sudo cp -r nvim-macos/lib/nvim /usr/local/lib/
+sudo cp -r nvim-macos/share /usr/local/
 
 install digestif with wrapper script in:
 curl \
@@ -9,3 +13,4 @@ curl \
   > digestif_wrap.sh
 
   Installed luarocks and then luarocks install --local digestif
+
