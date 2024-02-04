@@ -42,7 +42,8 @@ vim.keymap.set('n', '<leader>o', ':<C-u>call append(line("."), repeat([""], v:co
 vim.keymap.set('n', '<leader>O', ':<C-u>call append(line(".")-1, repeat([""], v:count1))<CR>', defaults)
 
 -- yank/delete to/from +register
-vim.keymap.set('n', '<leader>d', '"+d', {noremap = true})
-vim.keymap.set('n', '<leader>y', '"+y', {noremap = true})
-vim.keymap.set('n', '<leader>p', '"+p', {noremap = true})
-vim.keymap.set('n', '<leader>P', '"+P', {noremap = true})
+vim.keymap.set({'n', 'v'}, '<leader>d', '"+d', {noremap = true})
+vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', {noremap = true})
+vim.keymap.set({'n', 'v'}, '<leader>Y', '"+Y', {noremap = true})
+vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', {noremap = true})
+vim.keymap.set({'n', 'v'}, '<leader>P', '"+P', {noremap = true})
