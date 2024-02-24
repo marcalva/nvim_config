@@ -1,13 +1,11 @@
 -- vim.cmd([[set statusline=%!v:lua.require'statusline'.statusline()]])
 
 --- options
-vim.opt.mouse = ""
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.scrolloff = 4
-vim.opt.signcolumn = "auto"
+vim.cmd("syntax on")
 
-vim.opt.syntax = "ON"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -15,15 +13,14 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.cindent = true
 
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldenable = false
+vim.opt.mouse = ""
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.scrolloff = 4
+vim.opt.signcolumn = "auto"
 
 -- max number of items in popup window
 vim.cmd([[set pumheight=40]])
-
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 -- buffer navigation
 vim.keymap.set('n', '<leader>l', ':buffers<CR>:buffer ', {noremap = true})
@@ -43,7 +40,9 @@ vim.keymap.set('n', '<leader>O', ':<C-u>call append(line(".")-1, repeat([""], v:
 
 -- yank/delete to/from +register
 vim.keymap.set({'n', 'v'}, '<leader>d', '"+d', {noremap = true})
+vim.keymap.set({'n', 'v'}, '<leader>dd', '"+dd', {noremap = true})
 vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', {noremap = true})
+vim.keymap.set({'n', 'v'}, '<leader>yy', '"+yy', {noremap = true})
 vim.keymap.set({'n', 'v'}, '<leader>Y', '"+Y', {noremap = true})
 vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', {noremap = true})
 vim.keymap.set({'n', 'v'}, '<leader>P', '"+P', {noremap = true})

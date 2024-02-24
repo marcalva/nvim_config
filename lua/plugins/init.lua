@@ -16,6 +16,11 @@ require("lazy").setup({
     {"lervag/vimtex"},
     -- formatting
     {"nvim-treesitter/nvim-treesitter"},
+    {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        after = "nvim-treesitter",
+        requires = "nvim-treesitter/nvim-treesitter",
+    },
     {"kylechui/nvim-surround",
         version = "*",
         lazy = true,
@@ -88,9 +93,6 @@ require("lazy").setup({
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
         event = "InsertEnter",
-        config = function()
-            require("copilot").setup({})
-        end,
     },
     {
         "zbirenbaum/copilot-cmp",
