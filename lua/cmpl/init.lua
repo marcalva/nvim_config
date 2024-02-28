@@ -52,7 +52,7 @@ cmp.setup({
         -- { name = 'nvim_lsp_signature_help', priority = 2},
         { name = 'buffer', priority = 1},
         { name = 'luasnip', priority = 1},
-        { name = 'async_path',
+        { name = 'path',
             option = {get_cwd = main_getcwd},
             priority = 1,
         },
@@ -92,7 +92,7 @@ cmp.setup.cmdline({ '/', '?' }, {
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-        {name = 'async_path', option = {get_cwd = main_getcwd}},
+        {name = 'path', option = {get_cwd = main_getcwd}},
         {name = 'cmdline', option = {ignore_cmds = { 'Man', '!' }}},
     })
 })
@@ -105,7 +105,7 @@ cmp.setup.filetype({ "tex", "plaintex" }, {
         -- { name = 'nvim_lsp_signature_help' },
         { name = 'luasnip' },
         { name = 'buffer' },
-        { name = 'async_path',
+        { name = 'path',
             option = {get_cwd = main_getcwd},
         },
         { name = "lua-latex-symbols", option = {cache = true} },
