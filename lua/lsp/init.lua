@@ -1,31 +1,34 @@
--- automatic language server install
-require("mason").setup()
-require("mason-lspconfig").setup{
-    ensure_installed = {
-        "pyright",
-        "bashls",
-        "yamlls",
-    }
-}
--- need to install r language server separately, fails install with Mason
--- need to install clangd separately, depends on local libraries
--- install shellcheck binary and put in path so can be used by bashls
--- texlab should be installed separately (glib doesn't match)
-
--- null-ls
-require("mason-null-ls").setup {
-    ensure_installed = {
-        "flake8", -- extra diagnostics for python
-        "black", -- formatter for python
-        "shellharden", -- formatter for bash
-    },
-    automatic_installation = false,
-    handlers = {},
-}
-
+-- -- automatic language server install
+-- require("mason").setup()
+-- require("mason-lspconfig").setup{
+--     ensure_installed = {
+--         "pyright",
+--         "bashls",
+--         "yamlls",
+--     }
+-- }
+-- -- need to install r language server separately, fails install with Mason
+-- -- need to install clangd separately, depends on local libraries
+-- -- install shellcheck binary and put in path so can be used by bashls
+-- -- texlab should be installed separately (glib doesn't match)
+-- 
+-- -- null-ls
+-- require("mason-null-ls").setup {
+--     ensure_installed = {
+--         "flake8", -- extra diagnostics for python
+--         "black", -- formatter for python
+--         "shellharden", -- formatter for bash
+--     },
+--     automatic_installation = false,
+--     handlers = {},
+-- }
+-- 
 local null_ls = require("null-ls")
 null_ls.setup({
-    sources = { null_ls.builtins.code_actions.shellcheck }
+    sources = {
+        null_ls.builtins.code_actions.shellcheck,
+        null_ls.builtins.formatting.black,
+    }
 })
 -- R lsp already comes with styler and lintr
 -- clangd lsp already covers diagnostics and formatting
