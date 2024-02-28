@@ -24,7 +24,9 @@ require("mason-null-ls").setup {
 }
 
 local null_ls = require("null-ls")
-null_ls.setup({})
+null_ls.setup({
+    sources = { null_ls.builtins.code_actions.shellcheck }
+})
 -- R lsp already comes with styler and lintr
 -- clangd lsp already covers diagnostics and formatting
 -- bashls lsp already comes with shellcheck diagnostics
