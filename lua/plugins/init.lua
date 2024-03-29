@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    {"ibhagwan/fzf-lua", lazy = true},
+    {"https://gitlab.com/ibhagwan/fzf-lua", lazy = true},
     {"lervag/vimtex"},
     -- formatting
     {"nvim-treesitter/nvim-treesitter"},
