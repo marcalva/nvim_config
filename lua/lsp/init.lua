@@ -17,15 +17,19 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 lspconfig.clangd.setup{capabilities = capabilities}
 lspconfig.r_language_server.setup{capabilities = capabilities}
-lspconfig.pyright.setup{capabilities = capabilitie}
+lspconfig.basedpyright.setup{capabilities = capabilities,
+    settings = {
+        basedpyright = {
+            typeCheckingMode = "standard",
+        },
+    },
+}
 lspconfig.bashls.setup{capabilities = capabilities}
 lspconfig.texlab.setup{capabilities = capabilities}
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 -- Use LspAttach autocommand to only map the following keys
@@ -56,42 +60,47 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<space>f', function()
             vim.lsp.buf.format { async = true }
         end, opts)
+
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        client.server_capabilities.semanticTokensProvider = nil
+        local bufnr = ev.buf
+        -- require("lsp_signature").on_attach({hint_enable = false}, bufnr)
     end,
 })
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-    vim.lsp.handlers.signature_help, {
-        max_width = 120,
-        border = 'rounded',
-    })
-
+-- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+--     vim.lsp.handlers.signature_help, {
+--         max_width = 120,
+--         border = 'rounded',
+--     })
+-- 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
     vim.lsp.handlers.hover, {
         max_width = 120,
         border = 'rounded',
     })
 
-vim.diagnostic.config({
-    virtual_text = true,
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-    severity_sort = false,
-    float = {
-        source = 'always',
-        border = 'rounded',
-    },
-})
-
--- ray-x lsp_signature
-local signature_config = {
-    log_path = vim.fn.stdpath("cache") .. "/lsp_signature.log",
-    bind = true,
-    debug = false,
-    hint_enable = false,
-    handler_opts = { border = "rounded" },
-    hi_parameter = "IncSearch",
-    max_width = 80,
-}
-
-require("lsp_signature").setup(signature_config)
+-- vim.diagnostic.config({
+--     virtual_text = true,
+--     signs = true,
+--     underline = true,
+--     update_in_insert = false,
+--     severity_sort = false,
+--     float = {
+--         source = 'always',
+--         border = 'rounded',
+--     },
+-- })
+-- 
+-- -- ray-x lsp_signature
+-- local signature_config = {
+--     log_path = vim.fn.stdpath("cache") .. "/lsp_signature.log",
+--     bind = true,
+--     debug = false,
+--     hint_enable = false,
+--     handler_opts = { border = "rounded" },
+--     hi_parameter = "IncSearch",
+--     max_width = 80,
+-- }
+-- 
+-- require("lsp_signature").setup()
