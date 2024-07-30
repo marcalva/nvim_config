@@ -1,15 +1,9 @@
-local null_ls = require("null-ls")
-null_ls.setup({
-    sources = {
-        null_ls.builtins.code_actions.shellcheck,
-        null_ls.builtins.formatting.shellharden,
-        null_ls.builtins.formatting.black,
-        null_ls.builtins.diagnostics.flake8
-    }
-})
+-- formatters
 -- R lsp already comes with styler and lintr
 -- clangd lsp already covers diagnostics and formatting
 -- lspconfig.bashls already comes with shellcheck diagnostics
+-- useful formatters: shellharden, black flake8
+-- for formatting, use `!black %` for example.
 
 -- Set up lspconfig.
 local lspconfig = require('lspconfig')

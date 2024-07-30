@@ -65,19 +65,18 @@ require("lazy").setup({
     -- LSP
     {"neovim/nvim-lspconfig"},
     {'nvim-lua/plenary.nvim'},
-    {"jose-elias-alvarez/null-ls.nvim"},
     {"nvim-lua/lsp-status.nvim"},
     -- completion
+    {"hrsh7th/nvim-cmp"},
     {"hrsh7th/cmp-nvim-lsp"},
-    -- {"hrsh7th/cmp-nvim-lsp-signature-help"},
+    {"hrsh7th/cmp-nvim-lsp-signature-help"},
     {"hrsh7th/cmp-buffer"},
     {"hrsh7th/cmp-path"},
     {"hrsh7th/cmp-cmdline"},
     {"amarakon/nvim-cmp-lua-latex-symbols"},
-    {"hrsh7th/nvim-cmp"},
     {"onsails/lspkind.nvim"},
     {"ray-x/lsp_signature.nvim"},
-    {"dstein64/vim-startuptime"},
+    -- {"dstein64/vim-startuptime"},
     {
         "L3MON4D3/LuaSnip",
         -- follow latest release.
