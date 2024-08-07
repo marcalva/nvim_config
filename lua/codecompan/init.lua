@@ -5,6 +5,11 @@ require("codecompanion").setup({
                 env = {
                     api_key = "cmd:echo $ANTHROPIC_API_KEY",
                 },
+                schema = {
+                    model = {
+                        default = "claude-3-sonnet-20240229"
+                    }
+                }
             })
         end,
     },
