@@ -23,24 +23,6 @@ vim.g.get_jobid = function()
     end
 end
 
--- vim.api.nvim_create_user_command(
---     'Soft',
---     function()
---         if vim.bo.filetype == 'r' then
---             vim.cmd([[vs | terminal R]])
---         elseif vim.bo.filetype == 'python' then
---             vim.cmd([[vs | terminal python]])
---         else
---             vim.cmd([[vs | terminal]])
---         end
---         vim.cmd([[wincmd p]])
---         vim.cmd([[SlimeConfig]])
---         return
---     end,
---     {}
--- )
--- vim.keymap.set('n', '<leader>r', ":Soft<CR>", {noremap = true})
-
 --- terminal navigation keyamps
 vim.keymap.set('n', '<C-t><C-n>', ":tabedit | terminal<CR>", {noremap = true})
 vim.keymap.set('n', '<C-t><C-v>', ":vsplit | terminal<CR>", {noremap = true})
@@ -50,7 +32,6 @@ vim.keymap.set('t', '<C-w><C-l>', [[<C-\><C-n><C-w><C-l>]], {noremap = true})
 vim.keymap.set('t', '<C-w><C-h>', [[<C-\><C-n><C-w><C-h>]], {noremap = true})
 vim.keymap.set('t', '<C-w><C-j>', [[<C-\><C-n><C-w><C-j>]], {noremap = true})
 vim.keymap.set('t', '<C-w><C-k>', [[<C-\><C-n><C-w><C-k>]], {noremap = true})
-
 
 -- yarepl
 
@@ -68,10 +49,9 @@ yarepl.setup {
     ft = 'REPL',
     -- How yarepl open the REPL window, can be a string or a lua function.
     -- See below example for how to configure this option
-    wincmd = 'vs',
+    -- wincmd = 'vs',
     -- The available REPL palattes that `yarepl` can create REPL based on
     metas = {
-        aichat = { cmd = 'aichat', formatter = yarepl.formatter.bracketed_pasting },
         radian = { cmd = 'radian', formatter = yarepl.formatter.bracketed_pasting },
         ipython = { cmd = 'ipython', formatter = yarepl.formatter.bracketed_pasting },
         python = { cmd = 'python', formatter = yarepl.formatter.trim_empty_lines },
@@ -119,45 +99,6 @@ end
 local keymap = vim.api.nvim_set_keymap
 local bufmap = vim.api.nvim_buf_set_keymap
 local autocmd = vim.api.nvim_create_autocmd
-
--- <Leader>cs will be equivalent to `REPLStart aichat`
--- 2<Leader>cs will be equivalent to `2REPLStart aichat`, etc.
-keymap('n', '<Leader>cs', '', {
-    callback = run_cmd_with_count 'REPLStart aichat',
-    desc = 'Start an Aichat REPL',
-})
--- <Leader>cf will be equivalent to `REPLFocus aichat`
--- 2<Leader>cf will be equivalent to `2REPLFocus aichat`, etc.
-keymap('n', '<Leader>cf', '', {
-    callback = run_cmd_with_count 'REPLFocus aichat',
-    desc = 'Focus on Aichat REPL',
-})
-keymap('n', '<Leader>ch', '', {
-    callback = run_cmd_with_count 'REPLHide aichat',
-    desc = 'Hide Aichat REPL',
-})
-keymap('v', '<Leader>cr', '', {
-    callback = run_cmd_with_count 'REPLSendVisual aichat',
-    desc = 'Send visual region to Aichat',
-})
-keymap('n', '<Leader>crr', '', {
-    callback = run_cmd_with_count 'REPLSendLine aichat',
-    desc = 'Send current line to Aichat',
-})
--- `<Leader>crap` will send a paragraph to the first aichat REPL.
--- `2<Leader>crap` will send a paragraph to the second aichat REPL. Note that
--- `ap` is just an example and can be replaced with any text object or motion.
-keymap('n', '<Leader>cr', '', {
-    callback = run_cmd_with_count 'REPLSendOperator aichat',
-    desc = 'Operator to Send text to Aichat',
-})
-keymap('n', '<Leader>cq', '', {
-    callback = run_cmd_with_count 'REPLClose aichat',
-    desc = 'Quit Aichat',
-})
-keymap('n', '<Leader>cc', '<CMD>REPLCleanup<CR>', {
-    desc = 'Clear aichat REPLs.',
-})
 
 local ft_to_repl = {
     r = 'radian',

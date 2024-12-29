@@ -1,100 +1,60 @@
--- formatters
--- R lsp already comes with styler and lintr
--- clangd lsp already covers diagnostics and formatting
--- lspconfig.bashls already comes with shellcheck diagnostics
--- useful formatters: shellharden, black flake8
--- for formatting, use `!black %` for example.
-
--- Set up lspconfig.
+-- LSP Configuration
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-lspconfig.clangd.setup{capabilities = capabilities}
-lspconfig.r_language_server.setup{capabilities = capabilities}
-lspconfig.basedpyright.setup{capabilities = capabilities,
-    settings = {
-        basedpyright = {
-            typeCheckingMode = "standard",
-        },
-    },
-}
-lspconfig.bashls.setup{capabilities = capabilities}
-lspconfig.texlab.setup{capabilities = capabilities}
+-- Keybinding Configuration
+local function setup_keymaps(ev)
+    local opts = { buffer = ev.buf }
+    
+    -- Buffer-local mappings
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set({'n', 'i'}, '<C-s>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<space>f', function()
+        vim.lsp.buf.format { async = true }
+    end, opts)
+end
 
--- Global mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
+-- Global diagnostic keymaps
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
--- Use LspAttach autocommand to only map the following keys
--- after the language server attaches to the current buffer
+-- LSP attach configuration
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
         vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-        -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local opts = { buffer = ev.buf }
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-        vim.keymap.set({'n', 'i'}, '<C-s>', vim.lsp.buf.signature_help, opts)
-        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-        vim.keymap.set('n', '<space>wl', function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, opts)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-        vim.keymap.set('n', '<space>f', function()
-            vim.lsp.buf.format { async = true }
-        end, opts)
-
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        client.server_capabilities.semanticTokensProvider = nil
-        local bufnr = ev.buf
-        -- require("lsp_signature").on_attach({hint_enable = false}, bufnr)
+        setup_keymaps(ev)
     end,
 })
 
--- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
---     vim.lsp.handlers.signature_help, {
---         max_width = 120,
---         border = 'rounded',
---     })
--- 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-    vim.lsp.handlers.hover, {
-        max_width = 120,
-        border = 'rounded',
-    })
+-- Server Configurations
+local servers = {
+    clangd = {},
+    r_language_server = {},
+    bashls = {},
+    texlab = {},
+    basedpyright = {
+        settings = {
+            basedpyright = {typeCheckingMode = "standard"},
+        },
+    },
+}
 
--- vim.diagnostic.config({
---     virtual_text = true,
---     signs = true,
---     underline = true,
---     update_in_insert = false,
---     severity_sort = false,
---     float = {
---         source = 'always',
---         border = 'rounded',
---     },
--- })
--- 
--- -- ray-x lsp_signature
--- local signature_config = {
---     log_path = vim.fn.stdpath("cache") .. "/lsp_signature.log",
---     bind = true,
---     debug = false,
---     hint_enable = false,
---     handler_opts = { border = "rounded" },
---     hi_parameter = "IncSearch",
---     max_width = 80,
--- }
--- 
--- require("lsp_signature").setup()
+-- Setup servers
+for server, config in pairs(servers) do
+    config.capabilities = capabilities
+    config.handlers = config.handlers or vim.lsp.handlers
+    lspconfig[server].setup(config)
+end
