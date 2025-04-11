@@ -72,4 +72,5 @@ require("nvim-treesitter.configs").setup({
             },
         },
     },
+	fold = {enable = true}
 })

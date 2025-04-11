@@ -3,9 +3,11 @@
 --- options
 vim.cmd("syntax on")
 
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldenable = false
+vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4

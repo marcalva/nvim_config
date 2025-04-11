@@ -26,6 +26,7 @@ require("lazy").setup({
     {"sainnhe/gruvbox-material"},
     -- REPL
     {"milanglacier/yarepl.nvim"},
+    {"jpalardy/vim-slime"},
     -- LSP
     {"neovim/nvim-lspconfig"},
     -- completion
