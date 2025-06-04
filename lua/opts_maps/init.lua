@@ -5,15 +5,14 @@ vim.cmd("syntax on")
 
 vim.opt.foldenable = false
 vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = false
-vim.opt.cindent = true
+vim.opt.tabstop = 4        -- How many columns a \t char is rendered as (less relevant with expandtab)
+vim.opt.softtabstop = 4    -- Number of spaces <Tab> inserts/deletes in insert mode
+vim.opt.shiftwidth = 4     -- Number of spaces for auto/manual indentation (>>, <<)
+vim.opt.expandtab = true     -- Use spaces instead of tabs
+vim.opt.autoindent = true    -- Copy indent from current line when starting a new line
+vim.opt.smartindent = true   -- Smarter autoindent for some languages (often good enough, or use filetype plugins)
 
 vim.opt.mouse = ""
 vim.opt.number = true

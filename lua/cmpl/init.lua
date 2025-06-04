@@ -47,20 +47,6 @@ cmp.setup({
             behavior = cmp.ConfirmBehavior.Replace,
             select = false,
         }),
-        ['<Tab>'] = cmp.mapping(function(fallback)
-            if luasnip.expand_or_locally_jumpable() then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if luasnip.locally_jumpable(-1) then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
     }),
 
     sources = cmp.config.sources({
@@ -99,15 +85,6 @@ cmp.setup({
                     return vim.tbl_keys(bufs)
                 end
             }
-        },
-        -- Add nvim_lua for neovim lua API completion when editing config files
-        {
-            name = 'nvim_lua',
-            priority = 750,
-            keyword_length = 2,
-            option = {
-                include_deprecated = false,
-            },
         },
     }),
 })

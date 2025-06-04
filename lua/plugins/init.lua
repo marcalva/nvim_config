@@ -21,20 +21,21 @@ require("lazy").setup({
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
         },
-    },
-    -- colors
-    {"sainnhe/gruvbox-material"},
-    -- REPL
-    {"milanglacier/yarepl.nvim"},
-    {"jpalardy/vim-slime"},
-    -- LSP
-    {"neovim/nvim-lspconfig"},
-    -- completion
-    {"hrsh7th/nvim-cmp"},
-    {"hrsh7th/cmp-nvim-lsp"},
-    {"hrsh7th/cmp-buffer"},
-    {"hrsh7th/cmp-path"},
-    {"hrsh7th/cmp-cmdline"},
-    {"onsails/lspkind.nvim"},
-    {"L3MON4D3/LuaSnip"},
+	},
+	-- colors
+	{"sainnhe/gruvbox-material"},
+    {"NLKNguyen/papercolor-theme"},
+	-- REPL
+	{"milanglacier/yarepl.nvim"},
+	{"jpalardy/vim-slime"},
+	-- LSP
+	{"neovim/nvim-lspconfig"},
+	-- completion
+	{"hrsh7th/nvim-cmp"},
+	{"hrsh7th/cmp-nvim-lsp"},
+	{"hrsh7th/cmp-buffer"},
+	{"hrsh7th/cmp-path"},
+	{"hrsh7th/cmp-cmdline"},
+	{"onsails/lspkind.nvim"},
+	{"L3MON4D3/LuaSnip"},
 })
