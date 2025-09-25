@@ -1,5 +1,4 @@
 -- LSP Configuration
-local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Keybinding Configuration
@@ -56,5 +55,6 @@ local servers = {
 for server, config in pairs(servers) do
     config.capabilities = capabilities
     config.handlers = config.handlers or vim.lsp.handlers
-    lspconfig[server].setup(config)
+    vim.lsp.config(server, config)
+    -- require('lspconfig')[server].setup(config)
 end
