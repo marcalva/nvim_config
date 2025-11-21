@@ -49,6 +49,7 @@ local servers = {
             basedpyright = {typeCheckingMode = "standard"},
         },
     },
+    ruff = {}
 }
 
 -- Setup servers
@@ -56,5 +57,5 @@ for server, config in pairs(servers) do
     config.capabilities = capabilities
     config.handlers = config.handlers or vim.lsp.handlers
     vim.lsp.config(server, config)
-    -- require('lspconfig')[server].setup(config)
+    vim.lsp.enable({server})
 end
