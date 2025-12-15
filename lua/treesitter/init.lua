@@ -1,4 +1,4 @@
-require("nvim-treesitter.configs").setup({
+require("nvim-treesitter").setup({
     -- A list of parser names, or "all" (supported parsers)
     ensure_installed = {"c", "r", "bash", "lua", "vim", "vimdoc", "luadoc",
         "query", "markdown", "regex", "yaml", "python", "markdown_inline",

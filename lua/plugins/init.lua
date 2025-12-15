@@ -15,13 +15,11 @@ require("lazy").setup({
     {"https://gitlab.com/ibhagwan/fzf-lua", lazy = true},
     {"lervag/vimtex"},
     -- formatting
-    {"nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-        event = { "BufReadPost", "BufNewFile" },
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter-textobjects",
-        },
-	},
+    {
+        'nvim-treesitter/nvim-treesitter',
+        lazy = false,
+        build = ':TSUpdate'
+    },
 	-- colors
 	{"sainnhe/gruvbox-material"},
     {"NLKNguyen/papercolor-theme"},
